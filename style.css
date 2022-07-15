@@ -1,0 +1,433 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+/**
+* Mixins
+*/
+/**
+* Reset styles
+*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+li {
+  list-style-type: none;
+}
+
+address {
+  font-style: normal;
+}
+
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  color: #fff !important;
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  background-color: transparent;
+}
+
+a,
+span {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/**
+* Base layout
+*/
+:root {
+  font-size: 62.5%;
+}
+
+html {
+  height: -webkit-fill-available;
+  height: -moz-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: -moz-fill-available;
+  font-size: 1.6rem;
+}
+
+body {
+  background: radial-gradient(circle, #ffe8ee 0%, #eed1d9 100%);
+  font-family: "Lilita One", sans-serif;
+}
+
+.hidden-text {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.button {
+  --border-color: #564a39;
+  --background-color: #ffeaea;
+  --text-shadow-color: #c5c5c5;
+  --text-stroke-color: #f9f4f4;
+  --text-color: #564a39;
+  --gradient-top: linear-gradient(180deg, #f1dede 0%, #fff1f1 100%);
+  --gradient-bottom: linear-gradient(0deg, #e7bdbd 0%, #ffdbdb 100%);
+  --border-radius: 100px;
+  --padding: 30px 40px;
+  --font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+@media only screen and (min-width: 768px) {
+  .button {
+    --padding: 35px 55px;
+    --font-size: 4rem;
+  }
+}
+.button .button__copy {
+  --text-shadow: 1px 1px var(--text-shadow-color);
+  --text-stroke: 1px var(--text-stroke-color);
+  text-shadow: var(--text-shadow);
+  -webkit-text-stroke: var(--text-stroke);
+}
+@media only screen and (min-width: 768px) {
+  .button .button__copy {
+    --text-shadow: 2px 2px var(--text-shadow-color);
+    --text-stroke: 2px var(--text-stroke-color);
+  }
+}
+.button .button__background {
+  --inset: 4px 5px 8px;
+  --inset-after: 5px 0 0;
+  --inset-before: 10px 5px 5px;
+  inset: var(--inset);
+}
+@media only screen and (min-width: 768px) {
+  .button .button__background {
+    --inset: 4px 7px 9px;
+    --inset-after: 5px 0 0;
+    --inset-before: 10px 5px 5px;
+  }
+}
+.button .button__background::after {
+  inset: var(--inset-after);
+}
+.button .button__background::before {
+  inset: var(--inset-before);
+}
+.button--active, .button--secondary {
+  --border-color: #564a39;
+  --background-color: #baffdf;
+  --text-shadow-color: white;
+  --text-stroke-color: #4cdce4;
+  --text-color: #564a39;
+  --gradient-top: linear-gradient(180deg, #16ffe9 0%, #b0f0ff 100%);
+  --gradient-bottom: linear-gradient(0deg, #47e3d4 0%, #5dffd2 100%);
+}
+.button--icon {
+  --border-radius: 50%;
+  --padding: 0;
+  --width: 45px;
+  --height: 45px;
+  width: var(--width);
+  height: var(--height);
+}
+@media only screen and (min-width: 768px) {
+  .button--icon {
+    --width: 50px;
+    --height: 50px;
+  }
+}
+.button--icon .button__copy {
+  --width: 16px;
+  --height: 16px;
+  width: var(--width);
+  height: var(--height);
+  top: -2px;
+  fill: currentColor;
+}
+@media only screen and (min-width: 768px) {
+  .button--icon .button__copy {
+    --width: 22px;
+    --height: 22px;
+  }
+}
+.button--icon .button__background {
+  --inset: 3px 3px 5px;
+  --inset-after: 2px 0 0;
+  --inset-before: 3px 3px 3px;
+}
+
+.button__copy {
+  position: relative;
+  color: var(--text-color);
+  top: -5px;
+  z-index: 4;
+}
+
+.button__background,
+.button__border {
+  position: absolute;
+  border-radius: var(--border-radius);
+  transition: transform 0.5s ease-out;
+}
+
+.button__border {
+  inset: 0;
+  background-color: var(--border-color);
+  z-index: 2;
+}
+
+.button__background {
+  background-color: var(--background-color);
+  z-index: 3;
+}
+.button__background::after, .button__background::before {
+  content: "";
+  position: absolute;
+}
+.button__background::after {
+  background: var(--gradient-bottom);
+  border-radius: var(--border-radius);
+  z-index: 1;
+}
+.button__background::before {
+  content: "";
+  position: absolute;
+  background: var(--gradient-top);
+  border-radius: var(--border-radius);
+  z-index: 2;
+}
+
+#sound-button,
+#start-button,
+#control-list,
+#social-list {
+  position: fixed;
+  z-index: 2;
+}
+
+#social-list {
+  display: none;
+  right: 20px;
+  bottom: 20px;
+}
+@media only screen and (min-width: 768px) {
+  #social-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+.social-list__item {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+}
+.social-list__item svg {
+  width: 100%;
+  height: 100%;
+  fill: black;
+}
+
+#sound-button {
+  right: 20px;
+  top: 20px;
+}
+#sound-button.button--active svg line {
+  opacity: 0.01;
+}
+#sound-button .button__copy {
+  --width: 16px;
+  --height: 16px;
+}
+@media only screen and (min-width: 768px) {
+  #sound-button .button__copy {
+    --width: 18px;
+    --height: 18px;
+  }
+}
+#sound-button .button__copy line {
+  opacity: 0.99;
+}
+
+#control-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  top: 50%;
+  left: 20px;
+  background-color: #ffeeee;
+  border-radius: 50px;
+  padding: 5px;
+  box-shadow: 0 0 0 3px #564a39;
+  opacity: 0.01;
+  visibility: hidden;
+  transform: translate(0, -50%);
+}
+#control-list button[data-id=glasses] .button__copy {
+  --width: 22px;
+  --height: 22px;
+}
+@media only screen and (min-width: 768px) {
+  #control-list button[data-id=glasses] .button__copy {
+    --width: 30px;
+    --height: 30px;
+  }
+}
+
+#svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#start-button {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#jigglypuff,
+#stars {
+  pointer-events: none;
+}
+
+#jigglypuff-background {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#jigglypuff,
+#sing-circles {
+  --float-x: 0;
+  --float-y: 0;
+  --float-rotate: 0;
+  --float-scale: 1;
+  --x: 0;
+  --y: 0;
+  --rotate: 0;
+  --scale: 0;
+  --scale-y: 1;
+  --scale-x: 1;
+  transform-origin: 50% 50%;
+  transform: translate3d(calc((var(--float-x) + var(--x)) * 1px), calc((var(--float-y) + var(--y)) * 1px), 0) rotate(calc((var(--float-rotate) + var(--rotate)) * 1deg)) scale(calc(var(--float-scale) - var(--scale))) scaleX(var(--scale-x)) scaleY(var(--scale-y));
+  opacity: 0.01;
+}
+
+#angry-eyes,
+#sad-eyes,
+#close-eyes,
+#sing-mouth,
+#angry-mouth,
+#sad-mouth,
+#hat,
+#bow,
+#glasses,
+.star {
+  opacity: 0.01;
+}
+
+#sing-hand,
+#right-hand,
+#left-ear,
+#right-ear {
+  --sing-rotate: 0;
+  --rotate: 0;
+  --scale: 1;
+  transform: rotate(calc((var(--rotate) + var(--sing-rotate)) * 1deg)) scale(var(--scale));
+  transform-box: fill-box;
+}
+
+#sing-hand {
+  transform-origin: 0 0;
+}
+
+#right-ear {
+  transform-origin: 0 100%;
+}
+
+#left-ear {
+  transform-origin: 100% 100%;
+}
+
+#left-leg,
+#right-leg {
+  --float-rotate: 0;
+  --rotate: 0;
+  --scale: 1;
+  transform: rotate(calc((var(--float-rotate) + var(--rotate)) * 1deg)) scale(var(--scale));
+  transform-box: fill-box;
+}
+
+#left-leg {
+  transform-origin: 100% 0;
+}
+
+#right-left {
+  transform-origin: 0 100%;
+}
+
+#hair {
+  --float-rotate: 0;
+  --float-x: 0;
+  --float-y: 0;
+  --rotate: 0;
+  --scale: 1;
+  transform: translate3d(0, calc(var(--float-y) * 1px), 0) rotate(calc((var(--rotate) + var(--float-rotate)) * 1deg)) scale(var(--scale));
+  transform-origin: 85% 20%;
+  transform-box: fill-box;
+}
+
+#eyes {
+  --background-fill: #b1e9f2;
+  --background-stroke: #537684;
+  --circle-fill: #537684;
+}
+#eyes .eyes__background {
+  fill: var(--background-fill);
+  stroke: var(--background-stroke);
+}
+#eyes .eyes__circle {
+  fill: var(--circle-fill);
+}
+#eyes.eyes--shiny {
+  --background-fill: #b1efba;
+  --background-stroke: #558254;
+  --circle-fill: #558254;
+}
